@@ -14,7 +14,7 @@ AMR este o aplicatie locala (fara autentificare deocamdata).
     - "+" Adaugare zile libere:
         - Data cand s-a lucrat
         - Numar zile care se adauga
-        - Categoria: Zi libera la Stat, Activitati Speciale etc.
+        - Categoria: Liber de serviciu, Exercitiu, Misiune, Recompensa
         - Detalii.
     - "-" Utilizare zile libere:
         - Numar zile (recuperari) care se folosesc
@@ -23,6 +23,9 @@ AMR este o aplicatie locala (fara autentificare deocamdata).
 
 ## Roadmap
 - PWA (Progressive Web App) - instalabil ca si client de sine statator
+    Avantaje urmarite:
+    - instalare facila atat pe dispozitive mobile cat si desktop.
+    - utilizare a aplicatiei in mod nativ, offline. 
 - REST API - care sa poata fi integrat in alte aplicatii.
 - calendar view - imagine de ansamplu prin intermediul unui calendar
 - sumar recurent ce poate fi trimis ca email (HTML) prin smtp relay.

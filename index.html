@@ -14,40 +14,40 @@
     <h1>Au Mai Ramas</h1>
 
     <div class="balance">
-      <div>Available Free Days</div>
+      <div>Zile libere (Recuperari) disponibile:</div>
       <div id="balance" class="balance-value">0</div>
     </div>
 
     <div class="card">
-      <h3>Add Entry</h3>
+      <h3>Intrare Noua</h3>
 
-      <label>Date</label>
+      <label>Data</label>
       <input type="date" id="date" />
 
-      <label>Type</label>
+      <label>Recuperare Obtinuta (+) / Utilizata (-)</label>
       <select id="type">
-        <option value="earned">Earned</option>
-        <option value="used">Used</option>
+        <option value="earned">Obtinuta</option>
+        <option value="used">Utilizata</option>
       </select>
 
-      <label>Category</label>
+      <label>Categorie</label>
       <select id="category">
         <option value="holiday">Holiday Work</option>
         <option value="extra">Extra Work</option>
         <option value="special">Special Day</option>
       </select>
 
-      <label>Amount (days)</label>
+      <label>Numar Zile</label>
       <input type="number" step="0.5" id="amount" />
 
-      <label>Note (optional)</label>
+      <label>Detalii (optional)</label>
       <input type="text" id="note" placeholder="e.g. National holiday"/>
 
       <button onclick="addEntry()">Save</button>
     </div>
 
     <div class="card">
-      <h3>History</h3>
+      <h3>Istoric</h3>
       <div id="history"></div>
     </div>
   </div>
