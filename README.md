@@ -1,13 +1,13 @@
 # AMR
 
 ## Descriere
-AMR (Au Mai Ramas) este o aplicatie web, care isi propune sa vina in ajutorul cadrelor MAPN, si care sa faciliteze evidenta recuperarilor obtinute pe parcursul activitatii lor.
+AMR (Au Mai Ramas) este o aplicatie web, care se adreseaza in mod deosebit angajatilor din sistemul de Stat, si care isi propune sa faciliteze gestionarea zilelor de recuperare, obtinute pe parcursul activitatii lor.
 
-AMR este o aplicatie locala, fara autentificare, care sa poata functiona atat de sine statator, cat si integrata cu solutii proprii.
+AMR poate functiona atat ca aplicatie de sine statatoare, cat si integrata cu diferite solutii terte.
 
 Functiile cheie ale acestei aplicatii sunt:
 - sumar concis al zilelor de recuperare disponibile pe anul curent.
-- evidenta zilelor de recuperare adaugate si utilizate.
+- gestionarea zilelor de recuperare, adaugate si utilizate.
 
 ## Cerinte
 - Descrierea detailata a functiilor principale
