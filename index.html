@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Free Days Tracker</title>
+
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --positive: #16a34a;
+      --negative: #dc2626;
+      --muted: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: #111;
+      padding: 1rem;
+    }
+
+    .app {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .balance {
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .balance-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.25rem;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0.5rem 0;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .amount-positive {
+      color: var(--positive);
+      font-weight: 600;
+    }
+
+    .amount-negative {
+      color: var(--negative);
+      font-weight: 600;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: var(--negative);
+      font-size: 0.9rem;
+      cursor: pointer;
+      width: auto;
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 480px) {
+      .balance-value {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app">
+    <h1>Free Days Tracker</h1>
+
+    <div class="balance">
+      <div>Available Free Days</div>
+      <div id="balance" class="balance-value">0</div>
+    </div>
+
+    <div class="card">
+      <h3>Add Entry</h3>
+
+      <label>Date</label>
+      <input type="date" id="date" />
+
+      <label>Type</label>
+      <select id="type">
+        <option value="earned">Earned</option>
+        <option value="used">Used</option>
+      </select>
+
+      <label>Category</label>
+      <select id="category">
+        <option value="holiday">Holiday Work</option>
+        <option value="extra">Extra Work</option>
+        <option value="special">Special Day</option>
+      </select>
+
+      <label>Amount (days)</label>
+      <input type="number" step="0.5" id="amount" />
+
+      <label>Note (optional)</label>
+      <input type="text" id="note" placeholder="e.g. National holiday"/>
+
+      <button onclick="addEntry()">Save</button>
+    </div>
+
+    <div class="card">
+      <h3>History</h3>
+      <div id="history"></div>
+    </div>
+  </div>
+
+  <script>
+    const rules = {
+      holiday: 1.5,
+      extra: 0.5,
+      special: 1
+    };
+
+    let entries = JSON.parse(localStorage.getItem("entries")) || [];
+
+    const dateInput = document.getElementById("date");
+    const typeSelect = document.getElementById("type");
+    const categorySelect = document.getElementById("category");
+    const amountInput = document.getElementById("amount");
+
+    dateInput.valueAsDate = new Date();
+
+    categorySelect.addEventListener("change", autoSetAmount);
+    typeSelect.addEventListener("change", toggleCategory);
+
+    function autoSetAmount() {
+      if (typeSelect.value === "earned") {
+        amountInput.value = rules[categorySelect.value];
+      }
+    }
+
+    function toggleCategory() {
+      const disabled = typeSelect.value === "used";
+      categorySelect.disabled = disabled;
+      if (disabled) {
+        amountInput.value = 1;
+      } else {
+        autoSetAmount();
+      }
+    }
+
+    function addEntry() {
+      const entry = {
+        id: Date.now(),
+        date: dateInput.value,
+        type: typeSelect.value,
+        category: categorySelect.value,
+        amount: parseFloat(amountInput.value),
+        note: document.getElementById("note").value
+      };
+
+      if (!entry.amount || entry.amount <= 0) return;
+
+      entries.unshift(entry);
+      save();
+      render();
+      document.getElementById("note").value = "";
+    }
+
+    function deleteEntry(id) {
+      entries = entries.filter(e => e.id !== id);
+      save();
+      render();
+    }
+
+    function calculateBalance() {
+      return entries.reduce((sum, e) => {
+        return e.type === "earned"
+          ? sum + e.amount
+          : sum - e.amount;
+      }, 0);
+    }
+
+    function save() {
+      localStorage.setItem("entries", JSON.stringify(entries));
+    }
+
+    function render() {
+      const balance = calculateBalance();
+      const balanceEl = document.getElementById("balance");
+      balanceEl.textContent = balance.toFixed(1);
+      balanceEl.style.color = balance >= 0 ? "var(--positive)" : "var(--negative)";
+
+      const history = document.getElementById("history");
+      history.innerHTML = "";
+
+      entries.forEach(e => {
+        const div = document.createElement("div");
+        div.className = "history-item";
+
+        const sign = e.type === "earned" ? "+" : "−";
+        const amountClass = e.type === "earned" ? "amount-positive" : "amount-negative";
+
+        div.innerHTML = `
+          <div>
+            <div class="${amountClass}">
+              ${sign}${e.amount} ${e.type === "earned" ? e.category : "used"}
+            </div>
+            <div class="note">${e.date} ${e.note ? "– " + e.note : ""}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteEntry(${e.id})">✕</button>
+        `;
+
+        history.appendChild(div);
+      });
+    }
+
+    autoSetAmount();
+    render();
+  </script>
+</body>
+</html>

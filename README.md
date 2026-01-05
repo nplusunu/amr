@@ -25,4 +25,4 @@ AMR este o aplicatie locala (fara autentificare deocamdata).
 - PWA (Progressive Web App) - instalabil ca si client de sine statator
 - REST API - care sa poata fi integrat in alte aplicatii.
 - calendar view - imagine de ansamplu prin intermediul unui calendar
-- sumar recurent ce poate fi trimis ca email (HTML) prin smtp relay. 
+- sumar recurent ce poate fi trimis ca email (HTML) prin smtp relay.
