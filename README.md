@@ -9,17 +9,8 @@ Functiile cheie ale acestei aplicatii sunt:
 - sumar concis al zilelor de recuperare disponibile pe anul curent.
 - gestionarea zilelor de recuperare, adaugate si utilizate.
 
-## Cerinte
-- Descrierea detailata a functiilor principale
-- Interactiuni intre utilizatori si aplicatie
-- Fluxuri de utilizare si scenarii
-- Performanta (timpi incarcare, capacitate utilizare)
-- Securitate
-- Scalabilitate (adaugare de utilizatori noi, functionalitati noi)
-- Accesibilitate (compatibilitate cu diferite dispozitive)
-
 ## Structura
-1. Denumire si Balanta
+1. Sumar: Numarul de zile de recuperare disponibile pe anul curent.
 2. Actiuni:
     - "+" Adaugare zile libere:
         - Data cand s-a lucrat
@@ -30,6 +21,37 @@ Functiile cheie ale acestei aplicatii sunt:
         - Numar zile (recuperari) care se folosesc
         - Detalii
 3. Istoric - listare intrari, cele recente aparand primele.
+
+## Cerinte
+- Descrierea detailata a functiilor principale
+- Interactiuni intre utilizatori si aplicatie
+- Fluxuri de utilizare si scenarii
+- Performanta (timpi incarcare, capacitate utilizare)
+- Securitate
+- Scalabilitate (adaugare de utilizatori noi, functionalitati noi)
+- Accesibilitate (compatibilitate cu diferite dispozitive)
+
+## Interne
+1. Design si Interfata
+- Prototip, mockup, demo
+- Culori, fonturi, elemente vizuale
+- UX si UI
+2. Tehnologii folosite
+- Limbaj de programare folosit: HTML, CSS, Javascript
+- Framework-uri
+- BD
+
+## Planificare
+- timpi estimativi pentru fiecare faza de dezvoltare
+- livrabile prin fiecare etapa (prototip, beta, versiune finala)
+
+## Intretinere si Suport
+- plan de intretinere
+- responsabilitatile echipei de suport tehnic
+
+## Consideratii legale si de conformitate
+- reguli si reglementari aplicabile (GDRP, drepturi de autor)
+- masuri de protectie a datelor utilizatorilor
 
 ## Roadmap
 - PWA (Progressive Web App) - instalabil ca si client de sine statator
