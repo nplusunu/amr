@@ -52,6 +52,7 @@ Functiile cheie ale acestei aplicatii sunt:
 ## Consideratii legale si de conformitate
 - reguli si reglementari aplicabile (GDRP, drepturi de autor)
 - masuri de protectie a datelor utilizatorilor
+    - Nu e aplicatie cloud (SaaS), doar local, cu salvare a datelor in tabel excel, si optiune de export CSV or PDF
 
 ## Roadmap
 - PWA (Progressive Web App) - instalabil ca si client de sine statator
@@ -61,4 +62,7 @@ Functiile cheie ale acestei aplicatii sunt:
 - REST API - care sa poata fi integrat in alte aplicatii.
 - calendar view - imagine de ansamplu prin intermediul unui calendar
 - sumar recurent ce poate fi trimis ca email (HTML) prin smtp relay.
+    - ar putea fi incluse grafie (eg. Pie Chart) cu Statistici.
+- alerte cand balanta atinge un anumit prag;
+- alerta de "expirare" a zilelor (daca acestea expira)
 - backup al intrarilor pe un an de zile, si resetul contorului, pastrand recuperarile restante din anul anterior.
