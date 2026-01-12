@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name=""description" content="Evidenta recuperarilor">
+  <meta name="description" content="Evidenta recuperarilor">
   <title>AMR</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -13,46 +13,54 @@
   <div class="app">
     <h1>Au Mai Ramas</h1>
 
+    <!--Balanta - va afisa rezultatul final al zilelor libere ramase-->
     <div class="balance">
       <div>Zile libere (Recuperari) disponibile:</div>
       <div id="balance" class="balance-value">0</div>
     </div>
 
+    <!--Actiuni - de aici se vor opera adunar si scaderi de zile libere-->
     <div class="card">
       <h3>Actiuni</h3>
 
-      <label>Data</label>
+      <label for="date">Data</label>
       <input type="date" id="date" />
 
-      <label>Recuperare Obtinuta (+) / Utilizata (-)</label>
+      <label for="type">Recuperare Obtinuta (+) / Utilizata (-)</label>
       <select id="type">
         <option value="earned">Obtinuta</option>
         <option value="used">Utilizata</option>
       </select>
 
-      <label>Categorie</label>
+      <label for="category">Categorie</label>
       <select id="category">
         <option value="liber">Liber de Serviciu - 24h, Liber de Stat</option>
         <option value="exercitiu">Exercitiu, Alerta</option>
         <option value="recompensa">Recompensa</option>
       </select>
 
-      <label>Numar Zile</label>
-      <input type="number" step="0.5" id="amount" />
+      <label for="amount">Numar Zile</label>
+      <input type="number" step="0.5" id="amount" min="0" />
 
-      <label>Detalii (optional)</label>
+      <label for="note">Detalii (optional)</label>
       <input type="text" id="note" placeholder="e.g. National holiday"/>
 
-      <button onclick="addEntry()">Save</button>
+      <button type="button" onclick="addEntry()">Save</button>
     </div>
 
+    <!--Istoric - un log al intrarilor operate in sectiunea precedenta-->
     <div class="card">
       <h3>Istoric</h3>
       <div id="history"></div>
     </div>
   </div>
 
-  <!--Scriptul Javascript-->
+  <!-- Nota de subsol -->
+  <footer class="footnote">
+    Constantin &amp; Adina Nistor
+  </footer>
+
+  <!-- Scriptul Javascript -->
   <script src="app.js"></script>
 </body>
 </html>
