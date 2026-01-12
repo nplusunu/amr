@@ -1,7 +1,5 @@
-# AMR
-
-## Descriere
-AMR (Au Mai Ramas) este o aplicatie web, care se adreseaza in mod deosebit angajatilor din sistemul de Stat, si care isi propune sa faciliteze gestionarea zilelor de recuperare, obtinute pe parcursul activitatii lor.
+# AMR (Au Mai Ramas)
+Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute pe parcursul activitatii, la servici.
 
 AMR poate functiona atat ca aplicatie de sine statatoare, cat si integrata cu diferite solutii terte.
 
@@ -46,18 +44,20 @@ Functiile cheie ale acestei aplicatii sunt:
 - livrabile prin fiecare etapa (prototip, beta, versiune finala)
 
 ## Intretinere si Suport
+
+
 - plan de intretinere
 - responsabilitatile echipei de suport tehnic
 
 ## Consideratii legale si de conformitate
-- reguli si reglementari aplicabile (GDRP, drepturi de autor)
-- masuri de protectie a datelor utilizatorilor
-    - Nu e aplicatie cloud (SaaS), doar local, cu salvare a datelor in tabel excel, si optiune de export CSV or PDF
+Fiind o aplicatie utilizata fara un cont/autentificare, datele personale sunt salvate doar local, in deplina gestiune a utilizatorului.
+**Atentie**: Nodulul de autentificare este unul pur academic si demonstrativ - dupa sesiunea de prezentare, acest modul va fi inlaturat integral.
 
 ## Roadmap
 - PWA (Progressive Web App) - instalabil ca si client de sine statator
     Avantaje urmarite:
     - instalare facila atat pe dispozitive mobile cat si desktop.
+    - utilizarea aplicatiei pe sisteme de operare care nu mai sunt in suport si deci nu se poate instala altfel - BBOS, dumbphone
     - utilizare a aplicatiei in mod nativ, offline. 
 - REST API - care sa poata fi integrat in alte aplicatii.
 - calendar view - imagine de ansamplu prin intermediul unui calendar
@@ -66,3 +66,4 @@ Functiile cheie ale acestei aplicatii sunt:
 - alerte cand balanta atinge un anumit prag;
 - alerta de "expirare" a zilelor (daca acestea expira)
 - backup al intrarilor pe un an de zile, si resetul contorului, pastrand recuperarile restante din anul anterior.
+- balanta exprimata in ore si zile, deoarece se mai pot da si ore libere, nu o zi intreaga.
