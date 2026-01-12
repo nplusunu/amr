@@ -84,7 +84,7 @@ if (!empty($_SESSION['entries'])) {
 
 <h2>Export</h2>
 <p>
-<form method="POST" action="php_helper/server_export.php">
+<form method="POST" action="server_export.php">
     <input type="hidden" name="entries" value='<?php echo json_encode($_SESSION['entries']); ?>'>
     <button type="submit">Export CSV via Server (PHP)</button>
 </form>
