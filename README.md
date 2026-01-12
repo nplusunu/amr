@@ -47,11 +47,22 @@ Nu este un plafon de numar de utilizatori sau sesiuni deschise.
 
 ## Interne
 1. Design si Interfata
-- Prototip, mockup, demo
-- Culori, fonturi, elemente vizuale
-- UX si UI
+AMR isi propune sa functioneze in doua regimuri:
+- Complet: aceasta este varianta vizibila folosind oricare din web-browserele moderne.
+- CLI (Command Line Interface): varianta "prietenoasa" cu consola (Terminal)
+
 2. Tehnologii folosite
-- Limbaj de programare folosit: HTML, CSS, Javascript
+**HTML** si **CSS** este utilizat pentru a construi interfata de baza, urmarind o compatibilitate Terminal/Web browser:
+    - **Forms** pentru adaugarea noilor intrari, pentru configuratiile fara JS.
+    - **Table-view** pentru vizionarea Istoricului intr-un text browser.
+    - Vizionarea Balantei
+    - linkuri de Export si Stergere
+**Javascript** ofera functionalitatile critice ale aplicatiei, functionalitati ce asigura procesarea si retinerea informatiei la utilizator (client-side).
+    - adaugarea/setregerea de intrari
+    - CSV export
+**PHP** ofera functionalitatile ajutatoare, la cerere (on-demand), de la nivelul serverului (server-side):
+    - analiza si creare de grafice, care sa construiasca un raport.
+    - trimiterea pe email a respectivului raport.
 
 ## Planificare
 Aplicatia AMR a fost dezvoltata ad-hoc, coordonand efortul prin intermediul sistemului de versionare git, folosind ca si solutie GitHub.
