@@ -40,13 +40,13 @@
 
 <h2>Istoric</h2>
 <?php
-// Super lightweight backend simulation for terminal
 session_start();
 if (!isset($_SESSION['entries'])) {
     $_SESSION['entries'] = [];
 }
 
-// Handle form submission
+// Gestionarea unei inregistrari noi
+// Completeaza o noua inregistrare si adauga la sesiunea deschisa
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $entry = [
         'id' => time(),
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['entries'][] = $entry;
 }
 
-// Calculate balance
+// Calculaza balanta (Nr zile obtinute - Nr. zile utilizate)
 $balance = 0;
 foreach ($_SESSION['entries'] as $e) {
     $balance += ($e['type'] === 'earned') ? $e['amount'] : -$e['amount'];
@@ -67,6 +67,7 @@ foreach ($_SESSION['entries'] as $e) {
 
 echo "<p>Balance: " . number_format($balance, 1) . "</p>";
 
+// Daca exista inregistrari, afiseaza-le sub forma unui tabel.
 if (!empty($_SESSION['entries'])) {
     echo "<table><tr><th>Date</th><th>Type</th><th>Category</th><th>Amount</th><th>Note</th></tr>";
     foreach ($_SESSION['entries'] as $e) {
