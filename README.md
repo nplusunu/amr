@@ -12,10 +12,10 @@ Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute 
     - "-" Utilizare zile libere:
         - Numar zile (recuperari) care se folosesc.
         - Detalii.
-3. **Istoric**: listare intrari efectuate anterior.
+3. **Istoric**: listare inregistrari efectuate anterior.
 
 ## Utilizare
-- Aplicatia se poate accesa prin intermediul URL: [https://amr.nplusunu.ro](https://amr.nplusunu.ro).
+- Aplicatia se poate accesa prin intermediul adresei: [https://amr.nplusunu.ro](https://amr.nplusunu.ro).
 - In prima sectiune va fi vizibil un **Sumar** al zilelor libere disponibile.
     - Valoarea initiala cand aplicatia se deschide este 0.
     - Aceasta valoare va reflecta rezultatul total al adaugarilor/stergerilor realizate pe parcurs.
@@ -24,9 +24,12 @@ Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute 
     - Aceste intrari sunt prezentate in ordinea in care au fost adaugate.
     - Ele pot fi sterse, apasand butonul [X] de stergere.
 
-**Atentie**: Datele completate si zilele adaugate/scazute sunt valabile doar in sesiunea existenta. Odata inchisa sesiunea, datele care nu sunt salvate/exportate se pierd.
+**Atentie**: Datele completate si zilele adaugate/scazute sunt valabile doar in sesiunea existenta. Odata inchisa sesiunea, datele care nu sunt exportate se pierd.
 
 ## Caracteristici
+AMR este o aplicatie autonoma, HTML-first, serverless, fara dependinte, care poate functiona si offline, intrucat procesarea si stocarea informatiilor se realizeaza la nivelul utilizatorului, nu cel al serverului.
+Elementele server-side sunt optionale: ex. functia de export scrisa in PHP, utila in interactiunea cu applicatia prin intermediul consolei, folosind browser text.
+
 **Compatibilitate**: Aceasta aplicatie este disponibila pentru toate dispozitivele ce pot comunica prin intermediul protocolului **HTTP**, indiferent de sistemul de operare.
 AMR poate functiona atat ca aplicatie de sine statatoare, cat si integrata cu diferite solutii terte, datorita atat protocolului de comunicare extrem de versatil, dar si formatului standard ales pentru salvare a datelor (**CSV**), acestea putand fi folosite la randul lor ca date de intrare pentru diferite automatizari (pipelines) sau aplicatii.
 Formatul standard al datelor de iesire este util si in situatia in care se doreste efectuarea de copii de siguranta, copii ce pot fi vizionate si editate in aplicatii office Saas (Google Docs etc.) sau locale (Office, LibreOffice etc.).
@@ -36,14 +39,14 @@ Prin prezenta aplicatie ne dorim o acoperire cat mai larga, insa nu intra in sco
 
 **Securitate**: Se foloseste ecriptare SSL aplicata conexiunii HTTP (**HTTPS**), prin intermediul certificatului Let's Encrypt.
 Prelucrarea si retinerea datelor se realizeaza local, pe dispozitivul utilizatorului, astfel ele raman confidentiale.
+Codul Javascript a fost rescris pentru a include preventie impotriva atacurilor XSS (Cross-site scripting), astfel un atacator sa nu poate include script malitios.
 
 **Atentie**: Pentru o siguranta mai sporita, se poate opta pentru encriptarea documentului CSV salvat local.
 
 **Performanta**: Fiind o aplicatie simpla, atat ca si limbaj de programare cat si ca logica, utilizarea acesteia nu ridica probleme, nici pentru dispozitivul utilizatorului, nici pentru serverul unde aceasta aplicatie este gazduita, nici pentru conexiunea la internet, putand fi utilizata in medii oricat de ostile (CPU, RAM, Disc limitat, Conexiune problematica etc.)
 Nu este un plafon de numar de utilizatori sau sesiuni deschise.
 
-**Scalabilitate**:
-- Scalabilitate (adaugare de utilizatori noi, functionalitati noi)
+**Scalabilitate**: Adaugarea de functionalitati noi este facila deoarece structura aplicatiei este una foarte simpla si in acelasi timp se face distinctia intre functionalitatile de baza si cele optionale.
 
 ## Interne
 1. Design si Interfata
