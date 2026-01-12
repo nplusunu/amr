@@ -120,3 +120,47 @@ function render() {
 /* Initial load */
 toggleCategory();
 render();
+
+function exportCSV() {
+  if (entries.length === 0) {
+    alert("Nu exista date pentru export.");
+    return;
+  }
+
+  const headers = [
+    "Data",
+    "Tip",
+    "Categorie",
+    "Numar Zile",
+    "Detalii"
+  ];
+
+  const rows = entries.map(e => [
+    e.date,
+    e.type === "earned" ? "Obtinuta" : "Utilizata",
+    e.category ?? "",
+    e.amount,
+    e.note ?? ""
+  ]);
+
+  let csvContent = headers.join(";") + "\n";
+
+  rows.forEach(row => {
+    csvContent += row
+      .map(value => `"${String(value).replace(/"/g, '""')}"`)
+      .join(";") + "\n";
+  });
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `recuperari_${new Date().toISOString().split("T")[0]}.csv`;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+}
