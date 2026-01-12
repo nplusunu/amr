@@ -1,29 +1,35 @@
+// Seteaza valorile implicite a fiecarui tip de zi lucrata si liberele obtinute in mod normal.
 const rules = {
   liber: 2,
   exercitiu: 1,
   recompensa: 1
 };
 
+// Obtine inregistrarile salvate cu localStorage, iar daca nu exista, initializeaza cu un array fara continut.
 let entries = JSON.parse(localStorage.getItem("entries")) || [];
 
+// DOM (Document Object Model)
 const dateInput = document.getElementById("date");
 const typeSelect = document.getElementById("type");
 const categorySelect = document.getElementById("category");
 const amountInput = document.getElementById("amount");
 const noteInput = document.getElementById("note");
 
-/* Set today as default date (safe cross-browser) */
+// Setare ca valoare implicita a Datei, data zilei curente
 dateInput.value = new Date().toISOString().split("T")[0];
 
 categorySelect.addEventListener("change", autoSetAmount);
 typeSelect.addEventListener("change", toggleCategory);
 
+// Setare automata a valorii pentru Numar Zile, cand campul "Obtinut" este selectat anterior.
 function autoSetAmount() {
   if (typeSelect.value === "earned" && rules[categorySelect.value]) {
     amountInput.value = rules[categorySelect.value];
   }
 }
 
+// Comutare camp Obtinuta/Utilizata
+// Daca e selectata optiunea Utilizata, dezactiveaza campul Categorie
 function toggleCategory() {
   const isUsed = typeSelect.value === "used";
   categorySelect.disabled = isUsed;
@@ -35,6 +41,8 @@ function toggleCategory() {
   }
 }
 
+// Adauga o noua inregistrare.
+// Dupa adaugare, goleste campurile pentru a fi gata de o noua completare.
 function addEntry() {
   const amount = parseFloat(amountInput.value);
 
@@ -59,12 +67,14 @@ function addEntry() {
   noteInput.value = "";
 }
 
+// Stergere inregistrare, dupa ID
 function deleteEntry(id) {
   entries = entries.filter(e => e.id !== id);
   save();
   render();
 }
 
+// Calcul balanta (Nr zilelor obtinute - Nr zilelor utilizate)
 function calculateBalance() {
   return entries.reduce((sum, e) => {
     return e.type === "earned"
@@ -73,10 +83,15 @@ function calculateBalance() {
   }, 0);
 }
 
+// Salvarea in localStorage
 function save() {
   localStorage.setItem("entries", JSON.stringify(entries));
 }
 
+// Vizualizarea inregistrarilor si a balantei in UI
+// Rezultatul balantei cu o zecimala
+// Daca e un rezultat pozitiv, va aparea colorat cu verde
+// Daca e un rezultat negativ, va aparea colorat cu rosu
 function render() {
   const balance = calculateBalance();
   const balanceEl = document.getElementById("balance");
@@ -93,6 +108,8 @@ function render() {
     return;
   }
 
+  // Trece prin toate intrarile si construieste HTML pentru vizionare
+  // In functie de tipul inregistrarii, se va colora cu rosu sau verde. 
   entries.forEach(e => {
     const div = document.createElement("div");
     div.className = "history-item";
@@ -121,6 +138,7 @@ function render() {
 toggleCategory();
 render();
 
+// Exportul inregistrarilor in format CSV
 function exportCSV() {
   if (entries.length === 0) {
     alert("Nu exista date pentru export.");

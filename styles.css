@@ -1,3 +1,4 @@
+/* Definirea variabilelor de culori, pentru a putea fi refolosite pe parcursul CSSului. */
 :root {
     --bg: #f6f7f9;
     --card: #ffffff;
@@ -100,6 +101,7 @@ button:active {
     flex-wrap: wrap;
 }
 
+/* Inlaturare linie de separare, pentru ultima inregistrare din sectiunea Istoric */
 .history-item:last-child {
     border-bottom: none;
 }
@@ -130,6 +132,7 @@ button:active {
     width: 100%;
 }
 
+/* Responsive design pentru ecrane mici */
 @media (max-width: 480px) {
     .balance-value {
         font-size: 2rem;
