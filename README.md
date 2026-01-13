@@ -6,52 +6,52 @@ Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute 
 2. **Actiuni**:
     - "+" Adaugare zile libere:
         - Data cand s-a lucrat.
-        - Categoria: Liber de serviciu, Exercitiu, Alerta, Recompensa (acestea au configurate valori implicite, ce pot fi modificate).
+        - Categoria: Liber de serviciu, Exercitiu, Alerta, Recompensa.
         - Numar zile care se adauga.
-        - Detalii.
+        - Detalii (optional).
     - "-" Utilizare zile libere:
         - Numar zile (recuperari) care se folosesc.
-        - Detalii.
+        - Detalii (optional).
 3. **Istoric**: listare inregistrari efectuate anterior.
 
 ## Utilizare
-- Aplicatia se poate accesa prin intermediul adresei: [https://amr.nplusunu.ro](https://amr.nplusunu.ro).
-- In prima sectiune va fi vizibil un **Sumar** al zilelor libere disponibile.
-    - Valoarea initiala cand aplicatia se deschide este 0.
-    - Aceasta valoare va reflecta rezultatul total al adaugarilor/stergerilor realizate pe parcurs.
-- Se completeaza detaliile **Actiunii** ce se doreste realizata - adaugare (+) sau scadere (-) a zilelor - completand caracteristicile specifice fiecareia dintre actiuni.
-- In cadrul sectiunii **Istoric** vor aparea intrarile completate anterior, cu detaliile specifice.
-    - Aceste intrari sunt prezentate in ordinea in care au fost adaugate.
-    - Ele pot fi sterse, apasand butonul [X] de stergere.
+Aplicatia se prezinta in doua variante.
+- Web UI: disponibila la adresa:[https://amr.nplusunu.ro](https://amr.nplusunu.ro).
+- CLI: disponibila la adresa:[https://amr.nplusunu.ro/terminal.php](https://amr.nplusunu.ro/terminal.php).
 
-**Atentie**: Datele completate si zilele adaugate/scazute sunt valabile doar in sesiunea existenta. Odata inchisa sesiunea, datele care nu sunt exportate se pierd.
+Ambele variante urmeaza aceasi logica, difera ca mod de executie. Logica aplicatiei este dupa cum urmeaza:
+- Utilizatorul completeaza campurile din sectiunea **Actiuni**, in functie de ce isi doreste - fie sa adauge (+) sau sa scada (-) zile.
+- In functie de varianta utilizata (Web sau CLI), informatiile sunt verificate, iar apoi sunt salvate.
+- Balanta zilelor este recalculata si rezultatul se afiseaza in prima sectiune ca si **Sumar**.
+- **Istoricul** se actualizeaza cu inregistrarile completate anterior, impreuna cu datele lor specifice.
+    - aceste intrari sunt prezentate in ordinea in care au fost adaugate.
+    - ele pot fi sterse, apasand butonul de stergere [x].
+- Informatiile vizibile in Istoric pot fi exportate ca si fisier CSV.
 
 ## Caracteristici
-AMR este o aplicatie autonoma, HTML-first, serverless, fara dependinte, care poate functiona si offline, intrucat procesarea si stocarea informatiilor se realizeaza la nivelul utilizatorului, nu cel al serverului.
-Elementele server-side sunt optionale: ex. functia de export scrisa in PHP, utila in interactiunea cu applicatia prin intermediul consolei, folosind browser text.
 
-**Compatibilitate**: Aceasta aplicatie este disponibila pentru toate dispozitivele ce pot comunica prin intermediul protocolului **HTTP**, indiferent de sistemul de operare.
+**Compatibilitate**: Aceasta aplicatie este disponibila pentru o varietate larga de dispozitive, ce pot comunica prin intermediul protocolului **HTTP**, indiferent de sistemul de operare.
 AMR poate functiona atat ca aplicatie de sine statatoare, cat si integrata cu diferite solutii terte, datorita atat protocolului de comunicare extrem de versatil, dar si formatului standard ales pentru salvare a datelor (**CSV**), acestea putand fi folosite la randul lor ca date de intrare pentru diferite automatizari (pipelines) sau aplicatii.
 Formatul standard al datelor de iesire este util si in situatia in care se doreste efectuarea de copii de siguranta, copii ce pot fi vizionate si editate in aplicatii office Saas (Google Docs etc.) sau locale (Office, LibreOffice etc.).
 
 **Atentie**: Aceasta aplicatie poate functiona si pe dispozitive cu sisteme de operare ce nu mai sunt in sumport (ex. Blackberry BBOS10) dar pot aparea probleme de conectare datorata suportului in permanenta actualizare pentru certificatele de securitate TLS/SSL, lucru ce poate cauza diferite mesaje de alerta sau eroare.
 Prin prezenta aplicatie ne dorim o acoperire cat mai larga, insa nu intra in scopul nostru suportul dispozitivelor iesite din suportul lor oficial.
 
-**Securitate**: Se foloseste ecriptare SSL aplicata conexiunii HTTP (**HTTPS**), prin intermediul certificatului Let's Encrypt.
-Prelucrarea si retinerea datelor se realizeaza local, pe dispozitivul utilizatorului, astfel ele raman confidentiale.
-Codul Javascript a fost rescris pentru a include preventie impotriva atacurilor XSS (Cross-site scripting), astfel un atacator sa nu poate include script malitios.
+**Securitate**: Se foloseste ecriptare SSL aplicata conexiunii HTTP (**HTTPS**), prin intermediul certificatului Let's Encrypt, aplicat domeniului nplusunu.ro.
+Pentru varianta Web a aplicatiei, prelucrarea si retinerea datelor se realizeaza local, pe dispozitivul utilizatorului, astfel ele raman confidentiale.
+Pentru varianta CLI a aplicatiei, datele raman salvate cat timp sesiunea este deschisa.
 
-**Atentie**: Pentru o siguranta mai sporita, se poate opta pentru encriptarea documentului CSV salvat local.
+Pentru o siguranta mai sporita, se poate opta pentru encriptarea documentului CSV salvat local.
 
 **Performanta**: Fiind o aplicatie simpla, atat ca si limbaj de programare cat si ca logica, utilizarea acesteia nu ridica probleme, nici pentru dispozitivul utilizatorului, nici pentru serverul unde aceasta aplicatie este gazduita, nici pentru conexiunea la internet, putand fi utilizata in medii oricat de ostile (CPU, RAM, Disc limitat, Conexiune problematica etc.)
 Nu este un plafon de numar de utilizatori sau sesiuni deschise.
 
-**Scalabilitate**: Adaugarea de functionalitati noi este facila deoarece structura aplicatiei este una foarte simpla si in acelasi timp se face distinctia intre functionalitatile de baza si cele optionale.
+**Scalabilitate**: Adaugarea de functionalitati noi este facila deoarece structura aplicatiei este una foarte simpla.
 
 ## Interne
 1. Design si Interfata
 AMR isi propune sa functioneze in doua regimuri:
-- Complet: aceasta este varianta vizibila folosind oricare din web-browserele moderne.
+- Web UI: aceasta este varianta vizibila folosind oricare din web-browserele moderne.
 - CLI (Command Line Interface): varianta "prietenoasa" cu consola (Terminal)
 
 2. Tehnologii folosite
@@ -60,12 +60,10 @@ AMR isi propune sa functioneze in doua regimuri:
     - **Table-view** pentru vizionarea Istoricului intr-un text browser.
     - Vizionarea Balantei
     - linkuri de Export si Stergere
-**Javascript** ofera functionalitatile critice ale aplicatiei, functionalitati ce asigura procesarea si retinerea informatiei la utilizator (client-side).
+**Javascript** ofera functionalitatile critice ale aplicatiei in varianta Web UI, functionalitati ce asigura procesarea si retinerea informatiei la utilizator (client-side).
     - adaugarea/setregerea de intrari
     - CSV export
-**PHP** ofera functionalitatile ajutatoare, la cerere (on-demand), de la nivelul serverului (server-side):
-    - analiza si creare de grafice, care sa construiasca un raport.
-    - trimiterea pe email a respectivului raport.
+**PHP** ofera functionalitatile critice ale aplicatiei in varianta CLI, de la nivelul serverului (server-side). In aceasta varianta optiunile oferite de JS nu sunt disponibile.
 
 ## Planificare
 Aplicatia AMR a fost dezvoltata ad-hoc, coordonand efortul prin intermediul sistemului de versionare git, folosind ca si solutie GitHub.
@@ -73,8 +71,7 @@ Deoarece acesta este un efort voluntar, organizarea nu poate urma metodologiile 
 Organizarea noastra consta in:
 - Consolidarea si prioritizarea unui **Backlog** care sa contina: bug fixes, feature requests, imbunatatiri/optimizari etc.
     - Pe baza Feature-urilor cu impact major, se traseaza si un **Roadmap** (descris mai jos).
-- **Implementarea** modificarilor si aducerea lor in mediul de **Test**
-- Dupa evaluarea continutului din mediul de Test, daca noua versiune functioneaza corect, se aduce in mediul **Live**.
+- **Implementarea** modificarilor si aducerea lor in mediul de **Live** (amr.nplusunu.ro)
 
 ## Intretinere si Suport
 Aceasta aplicatie este una libera, gratuita, pentru care nu putem oferi suport oficial, dar suntem deschisi pentru intrebari, observatii si recomandari la adresa de email: amr [at] nplusunu . ro.
@@ -83,5 +80,4 @@ Aceasta aplicatie este una libera, gratuita, pentru care nu putem oferi suport o
 Fiind o aplicatie utilizata individual, datele personale sunt salvate local, in deplina gestiune a utilizatorului.
 
 ## Roadmap
-- PWA (Progressive Web App) - instalabil ca si client nativ, functional offline.
 - REST API - care sa poata fi integrat in alte aplicatii.
