@@ -1,19 +1,3 @@
-// 1. Integrarea cu WebAssembly (CRITICAL: Trebuie sa fie la inceput!)
-var Module = {
-  preRun: [],
-  postRun: [],
-  print: (function() {
-    return function(text) {
-      const element = document.getElementById('output');
-      if (element) {
-        element.value += text + "\n";
-        element.scrollTop = element.scrollHeight; // Auto-scrolls the terminal textarea
-      }
-    };
-  })()
-};
-
-//2. Rules, State, DOM, functions
 // Seteaza valorile implicite a fiecarui tip de zi lucrata si liberele obtinute in mod normal.
 const rules = {
   liber: 2,
