@@ -15,9 +15,10 @@ Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute 
 3. **Istoric**: listare inregistrari efectuate anterior.
 
 ## Utilizare
-Aplicatia se prezinta in doua variante.
+NOU! Aplicatia se prezinta in trei variante.
 - Web UI: disponibila la adresa:[https://amr.nplusunu.ro](https://amr.nplusunu.ro).
 - CLI: disponibila la adresa:[https://amr.nplusunu.ro/terminal.php](https://amr.nplusunu.ro/terminal.php).
+- REST API (Concept Demo: mai multe detalli, in sectiunea de mai jos REST API)
 
 Ambele variante urmeaza aceasi logica, difera ca mod de executie. Logica aplicatiei este dupa cum urmeaza:
 - Utilizatorul completeaza campurile din sectiunea **Actiuni**, in functie de ce isi doreste - fie sa adauge (+) sau sa scada (-) zile.
@@ -65,6 +66,8 @@ AMR isi propune sa functioneze in doua regimuri:
     - CSV export
 **PHP** ofera functionalitatile critice ale aplicatiei in varianta CLI, de la nivelul serverului (server-side). In aceasta varianta optiunile oferite de JS nu sunt disponibile.
 
+3. REST API (Concept Demo)
+
 ## Planificare
 Aplicatia AMR a fost dezvoltata ad-hoc, coordonand efortul prin intermediul sistemului de versionare git, folosind ca si solutie GitHub.
 Deoarece acesta este un efort voluntar, organizarea nu poate urma metodologiile clasice (ex. Agile), care sa poata oferi predictii ale unor livrabile.
@@ -80,4 +83,4 @@ Aceasta aplicatie este una libera, gratuita, pentru care nu putem oferi suport o
 Fiind o aplicatie utilizata individual, datele personale sunt salvate local, in deplina gestiune a utilizatorului.
 
 ## Roadmap
-- REST API - care sa poata fi integrat in alte aplicatii.
+- REST API real (nu demo) - care sa poata fi integrat in alte aplicatii.
