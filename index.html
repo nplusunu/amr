@@ -74,7 +74,10 @@
     Constantin &amp; Adina Nistor
   </footer>
 
-  <!-- Scriptul Javascript -->
+  <!-- app.js trebuie lansat inaintea lui wasm_engine.js -->
   <script src="app.js"></script>
+
+  <!-- wasm_engine.js este generat de Emscripten si depinde de app.js -->
+   <script async src="wasm_engine.js"></script>
 </body>
 </html>

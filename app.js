@@ -57,7 +57,7 @@ function toggleCategory() {
   }
 }
 
-// Adauga o noua inregistrare.
+// Adauga o noua inregistrare - functie actualizata cu Wasm Sync Hooks
 // Dupa adaugare, goleste campurile pentru a fi gata de o noua completare.
 function addEntry() {
   const amount = parseFloat(amountInput.value);
@@ -198,3 +198,22 @@ function exportCSV() {
 
   URL.revokeObjectURL(url);
 }
+
+// 3. TUI (Terminal User Interface) Event Listeners
+document.addEventListener("DOMContentLoaded", () => {
+  const startBtn = document.getElementById("start-tui-btn");
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      // Safely calls the compiled C++ switch-case loop inside WebAssembly
+      if (typeof Module.ccall === "function") {
+        Module.ccall('runRESTTerminal', null, [], []);
+      } else {
+        console.error("WebAssembly module hasn't loaded yet. Please wait a moment.");
+      }
+    });
+  }
+});
+
+/* Initial load execution triggers */
+toggleCategory();
+render(); 
