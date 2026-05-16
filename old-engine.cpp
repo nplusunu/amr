@@ -90,14 +90,35 @@ void handleGetBalance() {
     std::cout << "Computed Free Day Balance: " << balance << " days\n";
 }
 
-// JS va apela aceasta functie direct si va merge pe optiunea aleasa aici
+// Bucla ce se executa in interiorul WebAssembly
 extern "C" {
-    void routeRESTCommand(int option) {
-        switch (option) {
-            case 1: handleGetEntries(); break;
-            case 2: handlePostEntry(); break;
-            case 3: handleGetBalance(); break;
-            default: std::cout << "404 Error: Request route match failed.\n";
+    void runRESTTerminal() {
+        int option;
+        char buffer[256];
+        
+        while (true) {
+            std::cout << "\n=========================================\n";
+            std::cout << "   FREE DAY ENGINE: SIMULATED REST-TUI   \n";
+            std::cout << "=========================================\n";
+            std::cout << "1. GET  /api/entries    - View memory records\n";
+            std::cout << "2. POST /api/entries    - Store a new record\n";
+            std::cout << "3. GET  /api/balance    - Fetch dynamic balance\n";
+            std::cout << "4. EXIT                 - Close Console Frame\n";
+            std::cout << "Select command code [1-4]: ";
+            
+            if (!(std::cin >> option)) {
+                std::cin.clear();
+                std::cin >> buffer; // Clean buffer stream error
+                continue;
+            }
+
+            switch (option) {
+                case 1: handleGetEntries(); break;
+                case 2: handlePostEntry(); break;
+                case 3: handleGetBalance(); break;
+                case 4: std::cout << "Exiting terminal module context...\n"; return;
+                default: std::cout << "404 Error: Request route match failed.\n";
+            }
         }
     }
 }

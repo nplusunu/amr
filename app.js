@@ -201,19 +201,36 @@ function exportCSV() {
 
 // 3. TUI (Terminal User Interface) Event Listeners
 document.addEventListener("DOMContentLoaded", () => {
-  const startBtn = document.getElementById("start-tui-btn");
-  if (startBtn) {
-    startBtn.addEventListener("click", () => {
-      // Safely calls the compiled C++ switch-case loop inside WebAssembly
-      if (typeof Module.ccall === "function") {
-        Module.ccall('runRESTTerminal', null, [], []);
-      } else {
-        console.error("WebAssembly module hasn't loaded yet. Please wait a moment.");
+  const termInput = document.getElementById("terminal-input");
+  
+  if (termInput) {
+    termInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        const value = termInput.value.trim();
+        termInput.value = ""; // Clear input immediately
+        
+        if (value === "") return;
+        
+        // Print the typed command to our log window mimicry
+        const outputEl = document.getElementById("output");
+        if (outputEl) {
+          outputEl.value += `api-shell$ ${value}\n`;
+        }
+        
+        const option = parseInt(value, 10);
+        
+        if (isNaN(option) || option < 1 || option > 3) {
+          if (outputEl) outputEl.value += "Invalid selection. Choose 1, 2, or 3.\n";
+          return;
+        }
+        
+        // Safely trigger the clean execution without causing any browser prompt pop-up!
+        if (typeof Module._routeRESTCommand === "function") {
+          Module._routeRESTCommand(option);
+        } else {
+          console.error("WebAssembly Engine module is still processing initialization.");
+        }
       }
     });
   }
 });
-
-/* Initial load execution triggers */
-toggleCategory();
-render(); 
