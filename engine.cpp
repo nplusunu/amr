@@ -92,6 +92,20 @@ void handleGetBalance() {
 
 // JS va apela aceasta functie direct si va merge pe optiunea aleasa aici
 extern "C" {
+    void addEntryFromJS(long long id, const char* date, const char* type, const char* cat, double amount, const char* note) {
+        addNode(id, date, type, cat, amount, note);
+    }
+
+    void clearWasmList() {
+        LeaveEntry* current = head;
+        while (current != nullptr) {
+            LeaveEntry* next = current->next;
+            delete current;
+            current = next;
+        }
+        head = nullptr;
+    }
+
     void routeRESTCommand(int option) {
         switch (option) {
             case 1: handleGetEntries(); break;

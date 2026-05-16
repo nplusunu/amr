@@ -10,7 +10,12 @@ var Module = {
         element.scrollTop = element.scrollHeight; // Auto-scrolls the terminal textarea
       }
     };
-  })()
+  })(),
+  //Se executa de indata ce Wasm termina incarcarea sa in browser
+  onRuntimeInitialized: function() {
+    console.log("WebAssembly Engine is fully loaded. Performing initial state sync...");
+    syncStateToWasm(); 
+  }
 };
 
 //2. Rules, State, DOM, functions
@@ -104,6 +109,30 @@ function save() {
   localStorage.setItem("entries", JSON.stringify(entries));
 }
 
+// Sincronizarea intrarilor din JS catre WebAssembly
+function syncStateToWasm() {
+  // Verifica daca WebAssembly e disponibil
+  if (typeof Module._clearWasmList !== "function" || typeof Module._addEntryFromJS !== "function") {
+    return; // Wasm nu e complet initializat
+  }
+
+  // 1. Goleste lista din engine.cpp
+  Module._clearWasmList();
+
+  // 2. Repopuleaza lista invers - traversarea inversa pastreaza ordinea cronologica
+  for (let i = entries.length - 1; i >= 0; i--) {
+    const e = entries[i];
+    
+    // Conversia stringurilor in ASCII bytes pentru compilatorul C++
+    Module.ccall(
+      'addEntryFromJS', 
+      null, 
+      ['number', 'string', 'string', 'string', 'number', 'string'], 
+      [e.id, e.date, e.type, e.category || "", e.amount, e.note || ""]
+    );
+  }
+}
+
 // Vizualizarea inregistrarilor si a balantei in UI
 // Rezultatul balantei cu o zecimala
 // Daca e un rezultat pozitiv, va aparea colorat cu verde
@@ -148,6 +177,7 @@ function render() {
 
     history.appendChild(div);
   });
+  syncStateToWasm();
 }
 
 /* Initial load */

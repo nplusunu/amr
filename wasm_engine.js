@@ -4454,6 +4454,8 @@ function checkIncomingModuleAPI() {
 }
 
 // Imports from the Wasm binary.
+var _addEntryFromJS = Module['_addEntryFromJS'] = makeInvalidEarlyAccess('_addEntryFromJS');
+var _clearWasmList = Module['_clearWasmList'] = makeInvalidEarlyAccess('_clearWasmList');
 var _routeRESTCommand = Module['_routeRESTCommand'] = makeInvalidEarlyAccess('_routeRESTCommand');
 var _main = Module['_main'] = makeInvalidEarlyAccess('_main');
 var _fflush = makeInvalidEarlyAccess('_fflush');
@@ -4470,6 +4472,8 @@ var __indirect_function_table = makeInvalidEarlyAccess('__indirect_function_tabl
 var wasmMemory = makeInvalidEarlyAccess('wasmMemory');
 
 function assignWasmExports(wasmExports) {
+  assert(typeof wasmExports['addEntryFromJS'] != 'undefined', 'missing Wasm export: addEntryFromJS');
+  assert(typeof wasmExports['clearWasmList'] != 'undefined', 'missing Wasm export: clearWasmList');
   assert(typeof wasmExports['routeRESTCommand'] != 'undefined', 'missing Wasm export: routeRESTCommand');
   assert(typeof wasmExports['main'] != 'undefined', 'missing Wasm export: main');
   assert(typeof wasmExports['fflush'] != 'undefined', 'missing Wasm export: fflush');
@@ -4483,6 +4487,8 @@ function assignWasmExports(wasmExports) {
   assert(typeof wasmExports['emscripten_stack_get_current'] != 'undefined', 'missing Wasm export: emscripten_stack_get_current');
   assert(typeof wasmExports['memory'] != 'undefined', 'missing Wasm export: memory');
   assert(typeof wasmExports['__indirect_function_table'] != 'undefined', 'missing Wasm export: __indirect_function_table');
+  _addEntryFromJS = Module['_addEntryFromJS'] = createExportWrapper('addEntryFromJS', 6);
+  _clearWasmList = Module['_clearWasmList'] = createExportWrapper('clearWasmList', 0);
   _routeRESTCommand = Module['_routeRESTCommand'] = createExportWrapper('routeRESTCommand', 1);
   _main = Module['_main'] = createExportWrapper('main', 2);
   _fflush = createExportWrapper('fflush', 1);
