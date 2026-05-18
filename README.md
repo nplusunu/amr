@@ -19,7 +19,7 @@ Aplicatia se prezinta in doua variante.
 - Install: descrierea pasilor de instalare sunt disponibili in sectiunea [Instalare](#instalare) (mai jos).
 - Web UI: disponibila la adresa:[https://amr.nplusunu.ro](https://amr.nplusunu.ro).
 
-**Nota:** Aceasta aplicatie a continut si o versiune CLI, scrisa sub forma unui script PHP, versiune ce a fost creata in scop pur academic, pentru a evidentia diferentele de executare client-side/server-side. Desi acest script a fost inlaturat de pe server, este in continuare pastrat in interiorul directorului ["retired"](https://github.com/nplusunu/amr/tree/main/retired), din cadrul prezentului repository.
+**Nota:** Aceasta aplicatie a continut si o versiune CLI, scrisa sub forma unor scripturi PHP, versiune ce a fost creata in scop pur academic, pentru a evidentia diferentele de executare client-side/server-side. Desi aceste scripturi au fost inlaturate de pe server, ele sunt in continuare pastrate in interiorul directorului ["retired"](https://github.com/nplusunu/amr/tree/main/retired), din cadrul prezentului repository.
 
 Ambele variante urmeaza aceasi logica, difera ca mod de executie. Logica aplicatiei este dupa cum urmeaza:
 - Utilizatorul completeaza campurile din sectiunea **Actiuni**, in functie de ce isi doreste - fie sa adauge (+) sau sa scada (-) zile.
