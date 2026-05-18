@@ -15,10 +15,11 @@ Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute 
 3. **Istoric**: listare inregistrari efectuate anterior.
 
 ## Utilizare
-NOU! Aplicatia se prezinta in trei variante.
+Aplicatia se prezinta in doua variante.
+- Install: descrierea pasilor de instalare sunt disponibili in sectiunea [Instalare](#instalare) (mai jos).
 - Web UI: disponibila la adresa:[https://amr.nplusunu.ro](https://amr.nplusunu.ro).
-- CLI: disponibila la adresa:[https://amr.nplusunu.ro/terminal.php](https://amr.nplusunu.ro/terminal.php).
-- REST API (Concept Demo: mai multe detalli, in sectiunea de mai jos REST API)
+
+**Nota:** Aceasta aplicatie a continut si o versiune CLI, scrisa sub forma unui script PHP, versiune ce a fost creata in scop pur academic, pentru a evidentia diferentele de executare client-side/server-side. Desi acest script a fost inlaturat de pe server, este in continuare pastrat in interiorul directorului ["retired"](https://github.com/nplusunu/amr/tree/main/retired), din cadrul prezentului repository.
 
 Ambele variante urmeaza aceasi logica, difera ca mod de executie. Logica aplicatiei este dupa cum urmeaza:
 - Utilizatorul completeaza campurile din sectiunea **Actiuni**, in functie de ce isi doreste - fie sa adauge (+) sau sa scada (-) zile.
@@ -28,6 +29,8 @@ Ambele variante urmeaza aceasi logica, difera ca mod de executie. Logica aplicat
     - aceste intrari sunt prezentate in ordinea in care au fost adaugate.
     - ele pot fi sterse, apasand butonul de stergere [x].
 - Informatiile vizibile in Istoric pot fi exportate ca si fisier CSV.
+
+## Instalare
 
 ## Caracteristici
 
