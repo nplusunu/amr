@@ -111,25 +111,26 @@ function save() {
 
 // Sincronizarea intrarilor din JS catre WebAssembly
 function syncStateToWasm() {
-  // Verifica daca WebAssembly e disponibil
-  if (typeof Module._clearWasmList !== "function" || typeof Module._addEntryFromJS !== "function") {
-    return; // Wasm nu e complet initializat
-  }
+  // Emscripten adds exported functions directly to Module if compiled with EXPORTED_RUNTIME_METHODS=['ccall']
+  try {
+    // 1. Goleste lista din engine.cpp
+    Module.ccall('clearWasmList', null, [], []);
 
-  // 1. Goleste lista din engine.cpp
-  Module._clearWasmList();
-
-  // 2. Repopuleaza lista invers - traversarea inversa pastreaza ordinea cronologica
-  for (let i = entries.length - 1; i >= 0; i--) {
-    const e = entries[i];
-    
-    // Conversia stringurilor in ASCII bytes pentru compilatorul C++
-    Module.ccall(
-      'addEntryFromJS', 
-      null, 
-      ['number', 'string', 'string', 'string', 'number', 'string'], 
-      [e.id, e.date, e.type, e.category || "", e.amount, e.note || ""]
-    );
+    // 2. Repopuleaza lista invers - traversarea inversa pastreaza ordinea cronologica
+    for (let i = entries.length - 1; i >= 0; i--) {
+      const e = entries[i];
+      
+      // NOTE: For 64-bit integers (long long), pass them as BigInt or string if compilation complains,
+      // or ensure your Emscripten build supports BigInt integration.
+      Module.ccall(
+        'addEntryFromJS', 
+        null, 
+        ['number', 'string', 'string', 'string', 'number', 'string'], 
+        [BigInt(e.id), e.date, e.type, e.category || "", e.amount, e.note || ""]
+      );
+    }
+  } catch (e) {
+    console.warn("Wasm Engine not ready yet to sync:", e.message);
   }
 }
 
@@ -141,11 +142,14 @@ function render() {
   const balance = calculateBalance();
   const balanceEl = document.getElementById("balance");
 
-  balanceEl.textContent = balance.toFixed(1);
-  balanceEl.style.color =
-    balance >= 0 ? "var(--positive)" : "var(--negative)";
+  if (balanceEl) {
+    balanceEl.textContent = balance.toFixed(1);
+    balanceEl.style.color = balance >= 0 ? "var(--positive)" : "var(--negative)";
+  }
 
   const history = document.getElementById("history");
+  if (!history) return;
+  
   history.innerHTML = "";
 
   if (entries.length === 0) {
@@ -153,15 +157,12 @@ function render() {
     return;
   }
 
-  // Trece prin toate intrarile si construieste HTML pentru vizionare
-  // In functie de tipul inregistrarii, se va colora cu rosu sau verde. 
   entries.forEach(e => {
     const div = document.createElement("div");
     div.className = "history-item";
 
     const sign = e.type === "earned" ? "+" : "−";
-    const amountClass =
-      e.type === "earned" ? "amount-positive" : "amount-negative";
+    const amountClass = e.type === "earned" ? "amount-positive" : "amount-negative";
 
     div.innerHTML = `
       <div>
@@ -174,10 +175,8 @@ function render() {
       </div>
       <button class="delete-btn" onclick="deleteEntry(${e.id})">✕</button>
     `;
-
     history.appendChild(div);
   });
-  syncStateToWasm();
 }
 
 /* Initial load */
