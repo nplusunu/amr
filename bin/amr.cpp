@@ -159,7 +159,7 @@ int main() {
     int choice = 0;
     
     // Initializare db
-    db.push_back({1716034000000, "2026-01-01", "o", "liber", 0.0, "Sistemul a pornit local cu succes."});
+    db.push_back({1716034000000, "2026-01-01", "o", "recompensa", 0.0, "Sistemul a pornit local cu succes."});
 
     do {
         displayMenu();

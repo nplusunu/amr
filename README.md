@@ -47,7 +47,7 @@ AMR in varianta executabila local, este realizata in limbaj **C++**, fiind o scr
 
 Am folosit acest prilej pentru a pregati dezvoltarea acestui program sub forma unui REST API. In acest context, cu ajutorul **WebAssembly**, am creat Wasm Demo Console, un mediu de lansare a comenzilor ce simuleaza aplicatia AMR sub forma de REST API.
 
-**Nota:** WebAssembly (Wasm) este un runtime environment, o "masina virtuala low-level" ce permite executabilelor (precum /bin/amr) sa poata rula in interiorul unui website.
+**Nota:** WebAssembly (Wasm) este un runtime environment, o "masina virtuala" low-level ce permite executabilelor (precum /bin/amr) sa poata rula in interiorul unui website.
 Fiind o masina virtuala, aceasta vine cu multe limitari, ceea ce a impus rescrierea executabilului nostru, pentru a putea rula in interiorul consolei disponibile in interfata web.
 Deasemenea, vorbim doar de un Demo de REST API, deoarece unul autentic presupune comunicarea HTTP, iar WebAssembly, ca si sandbox, nu poate acomoda asemenea comunicare. Pentru realizarea acestui Demo, a fost scris un engine.cpp, unde API "routes" au fost definite ca functii standard, utilizand structuri de date si liste.
 

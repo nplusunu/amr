@@ -1,3 +1,6 @@
+/*Rescrierea si adaptarea aplicatiei Web "AMR" ca engine pentru WebAssembly.
+WebAssembly e o "masina virtuala" low-level, astfel capabilitatile in materie de cod C/C++ sunt limitate.*/
+
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
