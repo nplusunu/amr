@@ -37,13 +37,15 @@ Instalarea aplicatiei consta in copierea locala a fisierului sursa **/bin/amr.cp
 - ./amr
 
 ## Interne
-1. Design si Interfata:
+1. Design si Interfata
 - TUI (Terminal User Interface): varianta instalabila local contine un **Meniu**, interactiunea cu aplicatia realizandu-se selectand o optiune numerica 1-5.
 - Web UI: aceasta este varianta vizibila folosind oricare din web-browserele moderne (compatibile cu JS). Elementul de noutate aici este **Wasm Demo Console** - o consola intr-o interfata web (mai multe detalii mai jos).
 
 2. Tehnologii folosite
-- AMR in varianta executabila local, este realizata in limbaj **C++**, fiind o scriere si adaptare a variantei javascript, facand uz de structuri de date si operatii cu fisiere (functia de export CSV).
-- Am folosit acest prilej pentru a pregati dezvoltarea acestui program sub forma unui REST API. In acest context, cu ajutorul **WebAssembly**, am creat Wasm Demo Console, un mediu de lansare a comenzilor ce simuleaza aplicatia AMR sub forma de REST API.
+
+AMR in varianta executabila local, este realizata in limbaj **C++**, fiind o scriere si adaptare a variantei javascript, facand uz de structuri de date si operatii cu fisiere (functia de export CSV).
+
+Am folosit acest prilej pentru a pregati dezvoltarea acestui program sub forma unui REST API. In acest context, cu ajutorul **WebAssembly**, am creat Wasm Demo Console, un mediu de lansare a comenzilor ce simuleaza aplicatia AMR sub forma de REST API.
 
 **Nota:** WebAssembly (Wasm) este un runtime environment, o "masina virtuala low-level" ce permite executabilelor (precum /bin/amr) sa poata rula in interiorul unui website.
 Fiind o masina virtuala, aceasta vine cu multe limitari, ceea ce a impus rescrierea executabilului nostru, pentru a putea rula in interiorul consolei disponibile in interfata web.
