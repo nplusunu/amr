@@ -21,69 +21,44 @@ Aplicatia se prezinta in doua variante.
 
 **Nota:** Aceasta aplicatie a continut si o versiune CLI, scrisa sub forma unor scripturi PHP, versiune ce a fost creata in scop pur academic, pentru a evidentia diferentele de executare client-side/server-side. Desi aceste scripturi au fost inlaturate de pe server, ele sunt in continuare pastrate in interiorul directorului ["retired"](https://github.com/nplusunu/amr/tree/main/retired), din cadrul prezentului repository.
 
-Ambele variante urmeaza aceasi logica, difera ca mod de executie. Logica aplicatiei este dupa cum urmeaza:
-- Utilizatorul completeaza campurile din sectiunea **Actiuni**, in functie de ce isi doreste - fie sa adauge (+) sau sa scada (-) zile.
-- In functie de varianta utilizata (Web sau CLI), informatiile sunt verificate, iar apoi sunt salvate.
-- Balanta zilelor este recalculata si rezultatul se afiseaza in prima sectiune ca si **Sumar**.
+Ambele variante ale aplicatiei urmeaza aceasi logica:
+- Utilizatorul completeaza campurile din sectiunea **Actiuni (WebCLI) / Intrari (TUI)**, in functie de ce isi doreste - fie sa adauge sau sa scada zile.
+- Informatiile sunt verificate, iar apoi sunt salvate.
+- Balanta zilelor este calculata, si disponibila sub forma unui **Sumar**.
 - **Istoricul** se actualizeaza cu inregistrarile completate anterior, impreuna cu datele lor specifice.
-    - aceste intrari sunt prezentate in ordinea in care au fost adaugate.
-    - ele pot fi sterse, apasand butonul de stergere [x].
 - Informatiile vizibile in Istoric pot fi exportate ca si fisier CSV.
 
 ## Instalare
-
-## Caracteristici
-
-**Compatibilitate**: Aceasta aplicatie este disponibila pentru o varietate larga de dispozitive, ce pot comunica prin intermediul protocolului **HTTP**, indiferent de sistemul de operare.
-AMR poate functiona atat ca aplicatie de sine statatoare, cat si integrata cu diferite solutii terte, datorita atat protocolului de comunicare extrem de versatil, dar si formatului standard ales pentru salvare a datelor (**CSV**), acestea putand fi folosite la randul lor ca date de intrare pentru diferite automatizari (pipelines) sau aplicatii.
-Formatul standard al datelor de iesire este util si in situatia in care se doreste efectuarea de copii de siguranta, copii ce pot fi vizionate si editate in aplicatii office Saas (Google Docs etc.) sau locale (Office, LibreOffice etc.).
-
-**Atentie**: Aceasta aplicatie poate functiona si pe dispozitive cu sisteme de operare ce nu mai sunt in sumport (ex. Blackberry BBOS10) dar pot aparea probleme de conectare datorata suportului in permanenta actualizare pentru certificatele de securitate TLS/SSL, lucru ce poate cauza diferite mesaje de alerta sau eroare.
-Prin prezenta aplicatie ne dorim o acoperire cat mai larga, insa nu intra in scopul nostru suportul dispozitivelor iesite din suportul lor oficial.
-
-**Securitate**: Se foloseste ecriptare SSL aplicata conexiunii HTTP (**HTTPS**), prin intermediul certificatului Let's Encrypt, aplicat domeniului nplusunu.ro.
-Pentru varianta Web a aplicatiei, prelucrarea si retinerea datelor se realizeaza local, pe dispozitivul utilizatorului, astfel ele raman confidentiale.
-Pentru varianta CLI a aplicatiei, datele raman salvate cat timp sesiunea este deschisa.
-
-Pentru o siguranta mai sporita, se poate opta pentru encriptarea documentului CSV salvat local.
-
-**Performanta**: Fiind o aplicatie simpla, atat ca si limbaj de programare cat si ca logica, utilizarea acesteia nu ridica probleme, nici pentru dispozitivul utilizatorului, nici pentru serverul unde aceasta aplicatie este gazduita, nici pentru conexiunea la internet, putand fi utilizata in medii oricat de ostile (CPU, RAM, Disc limitat, Conexiune problematica etc.)
-Nu este un plafon de numar de utilizatori sau sesiuni deschise.
-
-**Scalabilitate**: Adaugarea de functionalitati noi este facila deoarece structura aplicatiei este una foarte simpla.
+Codul sursa poate fi obtinut prin downloadul arhivei Zip direct din prezentul repository, sau utilizand comanda git.
+Instalarea aplicatiei consta in copierea locala a fisierului sursa **/bin/amr.cpp** , si compilarea acestuia. Pasii de mai jos descriu instalarea pe un setup Linux sau WSL:
+- git clone https://github.com/nplusunu/amr.git
+- cd <cale-catre-directorul-amr/bin/>
+- g++ -o amr amr.cpp
+- ./amr
 
 ## Interne
 1. Design si Interfata
 AMR isi propune sa functioneze in doua regimuri:
-- Web UI: aceasta este varianta vizibila folosind oricare din web-browserele moderne.
-- CLI (Command Line Interface): varianta "prietenoasa" cu consola (Terminal)
+- TUI (Terminal User Interface): varianta instalabila local contine un **Meniu**, interactiunea cu aplicatia realizandu-se selectand o optiune numerica 1-5.
+- Web UI: aceasta este varianta vizibila folosind oricare din web-browserele moderne (compatibile cu JS). Elementul de noutate aici este **Wasm Demo Console** - o consola intr-o interfata web (mai multe detalii mai jos).
 
 2. Tehnologii folosite
-**HTML** si **CSS** este utilizat pentru a construi interfata de baza, urmarind o compatibilitate Terminal/Web browser:
-    - **Forms** pentru adaugarea noilor intrari, pentru configuratiile fara JS.
-    - **Table-view** pentru vizionarea Istoricului intr-un text browser.
-    - Vizionarea Balantei
-    - linkuri de Export si Stergere
-**Javascript** ofera functionalitatile critice ale aplicatiei in varianta Web UI, functionalitati ce asigura procesarea si retinerea informatiei la utilizator (client-side).
-    - adaugarea/setregerea de intrari
-    - CSV export
-**PHP** ofera functionalitatile critice ale aplicatiei in varianta CLI, de la nivelul serverului (server-side). In aceasta varianta optiunile oferite de JS nu sunt disponibile.
+AMR in varianta executabila local, este realizata in limbaj **C++**, fiind o scriere si adaptare a variantei javascript, facand uz de structuri de date si operatii cu fisiere (functia de export CSV).
 
-3. REST API (Concept Demo)
+Am folosit acest prilej pentru a pregati dezvoltarea acestui program sub forma unui REST API. In acest context, cu ajutorul **WebAssembly**, am creat Wasm Demo Console, un mediu de lansare a comenzilor ce simuleaza aplicatia AMR sub forma de REST API.
+
+**Nota:** WebAssembly (Wasm) este un runtime environment, o "masina virtuala low-level" ce permite executabilelor (precum /bin/amr) sa poata rula in interiorul unui website.
+Fiind o masina virtuala, aceasta vine cu multe limitari, ceea ce a impus rescrierea executabilului nostru, pentru a putea rula in interiorul consolei disponibile in interfata web.
+Deasemenea, vorbim doar de un Demo de REST API, deoarece unul autentic presupune comunicarea HTTP, iar WebAssembly, ca si sandbox, nu poate acomoda asemenea comunicare. Petru realizarea acestui Demo, a fost scris un engine.cpp, unde API "routes" au fost definite ca functii standard, utilizand structuri de date si liste.
+
+3. Arhitectura
+Interfata **Web** (HTML, CSS) primeste prin intermediul JS input:
+- din **Formular** - backendul aici este in app.js (pana aici e un Single-Page WebApp clasic)
+- din **Wasm Console** - "engine.js" (fisier generat prin compilarea cu **emcc**) capteaza inputul (Emscripten Bridge stdin/stdout) si apeleaza functiile C compilate direct.
 
 ## Planificare
-Aplicatia AMR a fost dezvoltata ad-hoc, coordonand efortul prin intermediul sistemului de versionare git, folosind ca si solutie GitHub.
-Deoarece acesta este un efort voluntar, organizarea nu poate urma metodologiile clasice (ex. Agile), care sa poata oferi predictii ale unor livrabile.
-Organizarea noastra consta in:
-- Consolidarea si prioritizarea unui **Backlog** care sa contina: bug fixes, feature requests, imbunatatiri/optimizari etc.
-    - Pe baza Feature-urilor cu impact major, se traseaza si un **Roadmap** (descris mai jos).
-- **Implementarea** modificarilor si aducerea lor in mediul de **Live** (amr.nplusunu.ro)
+AMR este un exercitiu demonstrativ de dezvoltare. Functionalitatea de baza - cea de gestionare a zilelor libere - este privita ca un "use-case". Scopul din spatele acestei aplicatii este de a testa diferite tehnologii si combinatii ale acestora.
 
-## Intretinere si Suport
-Aceasta aplicatie este una libera, gratuita, pentru care nu putem oferi suport oficial, dar suntem deschisi pentru intrebari, observatii si recomandari la adresa de email: amr [at] nplusunu . ro.
-
-## Consideratii legale si de conformitate
-Fiind o aplicatie utilizata individual, datele personale sunt salvate local, in deplina gestiune a utilizatorului.
-
-## Roadmap
-- REST API real (nu demo) - care sa poata fi integrat in alte aplicatii.
+- (Original) - WebApp care sa puna in valoare diferitele Interfete si moduri de functionare (client-side/server/side): HTML, CSS, JS, PHP
+- (Curent) - Aplicatie standalone care sa puna in valoare utilizarea structurilor de date: C++
+- (Viitor) - REST API real (nu demo).
