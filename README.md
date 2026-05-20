@@ -49,7 +49,7 @@ Am folosit acest prilej pentru a pregati dezvoltarea acestui program sub forma u
 
 **Nota:** WebAssembly (Wasm) este un runtime environment, o "masina virtuala low-level" ce permite executabilelor (precum /bin/amr) sa poata rula in interiorul unui website.
 Fiind o masina virtuala, aceasta vine cu multe limitari, ceea ce a impus rescrierea executabilului nostru, pentru a putea rula in interiorul consolei disponibile in interfata web.
-Deasemenea, vorbim doar de un Demo de REST API, deoarece unul autentic presupune comunicarea HTTP, iar WebAssembly, ca si sandbox, nu poate acomoda asemenea comunicare. Petru realizarea acestui Demo, a fost scris un engine.cpp, unde API "routes" au fost definite ca functii standard, utilizand structuri de date si liste.
+Deasemenea, vorbim doar de un Demo de REST API, deoarece unul autentic presupune comunicarea HTTP, iar WebAssembly, ca si sandbox, nu poate acomoda asemenea comunicare. Pentru realizarea acestui Demo, a fost scris un engine.cpp, unde API "routes" au fost definite ca functii standard, utilizand structuri de date si liste.
 
 3. Arhitectura
 
@@ -60,6 +60,6 @@ Interfata **Web** (HTML, CSS) primeste prin intermediul JS input:
 ## Planificare
 AMR este un exercitiu demonstrativ de dezvoltare. Functionalitatea de baza - cea de gestionare a zilelor libere - este privita ca un "use-case". Scopul din spatele acestei aplicatii este de a testa diferite tehnologii si combinatii ale acestora.
 
-- (Original) - WebApp care sa puna in valoare diferitele Interfete si moduri de functionare (client-side/server/side): HTML, CSS, JS, PHP
+- (Original) - WebApp care sa puna in valoare diferitele Interfete si moduri de functionare (client-side/server-side): HTML, CSS, JS, PHP
 - (Curent) - Aplicatie standalone care sa puna in valoare utilizarea structurilor de date: C++
 - (Viitor) - REST API real (nu demo).
