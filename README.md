@@ -40,15 +40,19 @@ Instalarea aplicatiei consta in copierea locala a fisierului sursa **/bin/amr.cp
 ### AMR (Standalone)
 Interactiunea cu ./amr se realizeaza prin selectarea unei optiuni numerice, din cadrul unui **Meniu**:
 
-**[1] Vizualizare intrari** - emuleaza un **GET /api/entries**, listand intrarile disponibile (**Istoric**), fiind populate implicit cu un mockup entry. Acest mockup serveste drept model de intrare si poarta si o notificare ca "Sistemul a pornit cu succes."
-**[2] Adaugare intrare noua** - emuleaza un **POST /api/entries**, adaugand o noua linie in Istoric, astfel:
+**1. Vizualizare intrari** - emuleaza un **GET /api/entries**, listand intrarile disponibile (**Istoric**), fiind populate implicit cu un mockup entry. Acest mockup serveste drept model de intrare si poarta si o notificare ca "Sistemul a pornit cu succes."
+
+**2. Adaugare intrare noua** - emuleaza un **POST /api/entries**, adaugand o noua linie in Istoric, astfel:
 - Utilizatorul alege Tipul: recuperare **obtinuta** (tastand "o") sau **utilizata** (tastand "u")
 - Se introduce Data recuperarii in format AAAA-LL-ZZ
 - Se alege Categoria: "liber" (implicit numarul de zile completat va fi 2), "exercitiu" (implicit 1 zi) sau "recompensa" (implicit 1 zi)
 - Se completeaza optional campul de detalii
-**[3] Sumar** - emuleaza un **GET /api/balance**, indicand numarul de zile libere disponibile.
-**[4] Export catre fisier CSV** - aceasta optiune va crea un fisier **libere.csv**, servind ca modalitate de salvare a intrarilor, care altfel s-ar pierde la iesirea din aplicatie.
-**[5] Iesire**
+
+**3. Sumar** - emuleaza un **GET /api/balance**, indicand numarul de zile libere disponibile.
+
+**4. Export catre fisier CSV** - aceasta optiune va crea un fisier **libere.csv**, servind ca modalitate de salvare a intrarilor, care altfel s-ar pierde la iesirea din aplicatie.
+
+**5. Iesire**
 
 
 ## Interne
