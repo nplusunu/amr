@@ -63,7 +63,7 @@ Datorita capacitatilor limitate pe care ni le pune la dispozitie WebAssembly, in
 
 **[ 2 ] POST entry** - utilizatorul tasteaza "2" pentru a adauga o intrare noua.
 - utilizarea acestei optiuni, se va face printr-un pop-up de input, introducand: tip ("earned" / "used"), data (YYYY-MM-DD), categorie ("liber" / "exercitiu" / "recompensa"), detalii (optional).
-- datorita unui [bug]() care se manifesta ca un infinite loop si pop-up-ul de input nu se mai inchide, pentru a iesi din pop-up trebuie selectata optiunea de "cancel".
+- datorita unui [bug](https://github.com/nplusunu/amr/issues/10) care se manifesta ca un infinite loop si pop-up-ul de input nu se mai inchide, pentru a iesi din pop-up trebuie selectata optiunea de "cancel".
 - informatia adaugata astfel **NU** se retine, fiind disponibila pana la urmatorul Page Refresh.
 
 **[ 3 ] GET balance** - utilizatorul tasteaza "3" pentru a obtine sumarul zilelor libere.
