@@ -16,8 +16,8 @@ Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute 
 
 ## Utilizare
 Aplicatia se prezinta in trei variante.
-- Install: descrierea pasilor de instalare sunt disponibili in sectiunea [Instalare](#amr---install).
-- Web UI: disponibila la adresa:[amr.nplusunu.ro](https://amr.nplusunu.ro).
+- Install: varianta [instalabila](#amr---install) local, disponibila offline.
+- Web UI: disponibila la adresa [amr.nplusunu.ro](https://amr.nplusunu.ro).
 - REST API (Demo): disponibila alaturi de Web UI, la aceasi adresa, sub forma **[Wasm Console](#amr---wasm)**.
 
 **Nota:** Aceasta aplicatie a continut si o versiune CLI, scrisa sub forma unor scripturi PHP, versiune ce a fost creata in scop pur academic, pentru a evidentia diferentele de executare client-side/server-side. Desi aceste scripturi au fost inlaturate de pe server, ele sunt in continuare pastrate in interiorul directorului ["retired"](https://github.com/nplusunu/amr/tree/main/retired), din cadrul prezentului repository.
