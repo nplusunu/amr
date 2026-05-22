@@ -15,20 +15,14 @@ Aceasta aplicatie faciliteaza gestionarea zilelor libere (recuperari), obtinute 
 3. **Istoric**: listare inregistrari efectuate anterior.
 
 ## Utilizare
-Aplicatia se prezinta in doua variante.
-- Install: descrierea pasilor de instalare sunt disponibili in sectiunea [Instalare](#instalare) (mai jos).
-- Web UI: disponibila la adresa:[https://amr.nplusunu.ro](https://amr.nplusunu.ro).
+Aplicatia se prezinta in trei variante.
+- Install: descrierea pasilor de instalare sunt disponibili in sectiunea [Instalare](#amr---install).
+- Web UI: disponibila la adresa:[amr.nplusunu.ro](https://amr.nplusunu.ro).
+- REST API (Demo): disponibila alaturi de Web UI, la aceasi adresa, sub forma **[Wasm Console](#amr---wasm)**.
 
 **Nota:** Aceasta aplicatie a continut si o versiune CLI, scrisa sub forma unor scripturi PHP, versiune ce a fost creata in scop pur academic, pentru a evidentia diferentele de executare client-side/server-side. Desi aceste scripturi au fost inlaturate de pe server, ele sunt in continuare pastrate in interiorul directorului ["retired"](https://github.com/nplusunu/amr/tree/main/retired), din cadrul prezentului repository.
 
-Ambele variante ale aplicatiei urmeaza aceasi logica:
-- Utilizatorul completeaza campurile din sectiunea **Actiuni (WebCLI) / Intrari (TUI)**, in functie de ce isi doreste - fie sa adauge sau sa scada zile.
-- Informatiile sunt verificate, iar apoi sunt salvate.
-- Balanta zilelor este calculata, si disponibila sub forma unui **Sumar**.
-- **Istoricul** se actualizeaza cu inregistrarile completate anterior, impreuna cu datele lor specifice.
-- Informatiile vizibile in Istoric pot fi exportate ca si fisier CSV.
-
-## Instalare
+### AMR - Install
 Codul sursa poate fi obtinut prin downloadul arhivei Zip direct din prezentul repository, sau utilizand comanda git.
 Instalarea aplicatiei consta in copierea locala a fisierului sursa **/bin/amr.cpp** , si compilarea acestuia. Pasii de mai jos descriu instalarea pe un setup Linux sau WSL:
 - git clone https://github.com/nplusunu/amr.git
@@ -36,8 +30,6 @@ Instalarea aplicatiei consta in copierea locala a fisierului sursa **/bin/amr.cp
 - g++ -o amr amr.cpp
 - ./amr
 
-## Utilizare
-### AMR (Standalone)
 Interactiunea cu ./amr se realizeaza prin selectarea unei optiuni numerice, din cadrul unui **Meniu**:
 
 **1. Vizualizare intrari** - simuleaza un **GET /api/entries**, listand intrarile disponibile (**Istoric**), fiind populate implicit cu un mockup entry. Acest mockup serveste drept model de intrare si poarta si o notificare ca "Sistemul a pornit cu succes."
@@ -54,9 +46,16 @@ Interactiunea cu ./amr se realizeaza prin selectarea unei optiuni numerice, din 
 
 **5. Iesire**
 
-### AMR (Wasm Console)
-Interactiunea cu AMR sub forma (simulata) de REST API, are loc in cadrul **Wasm Engine Demo Console (C++ Layer)**, in cadrul aplicatiei web [amr.nplusunu.ro](https://amr.nplusunu.ro).
-Datorita capacitatilor limitate pe care ni le pune la dispozitie WebAssembly, interactiunea este una de baza, avand la dispozitie doar 3 optiuni, anume:
+AMR in varianta executabila local, este realizata in limbaj **C++**, fiind o scriere si adaptare a variantei javascript, facand uz de structuri de date si operatii cu fisiere (functia de export CSV).
+
+### AMR - Wasm
+Am folosit scrierea si adaptarea variantei Web la varianta Instalabila, drept prilej pentru a pregati dezvoltarea acestui program sub forma unui REST API. In acest context, cu ajutorul **WebAssembly**, am creat **Wasm Demo Console**, un mediu de lansare a comenzilor ce simuleaza aplicatia AMR sub forma de REST API.
+
+**Nota:** WebAssembly (Wasm) este un runtime environment, o "masina virtuala" low-level ce permite executabilelor (precum /bin/amr) sa poata rula in interiorul unui website.
+Fiind o masina virtuala, aceasta vine cu multe limitari, ceea ce a impus rescrierea aplicatiei noastre locale (amr.cpp), pentru a putea rula in interiorul consolei disponibile in interfata web.
+Deasemenea, vorbim doar de un Demo de REST API, deoarece unul autentic presupune comunicarea HTTP, iar WebAssembly, ca si sandbox, nu poate acomoda asemenea comunicare. Pentru realizarea acestui Demo, a fost scris un engine.cpp, unde API "routes" au fost definite ca functii standard, utilizand structuri de date si liste.
+
+Interactiunea cu AMR sub forma (simulata) de REST API, are loc in cadrul **Wasm Engine Demo Console (C++ Layer)**, in cadrul aplicatiei web [amr.nplusunu.ro](https://amr.nplusunu.ro), astfel:
 
 **[ 1 ] GET entries** - utilizatorul tasteaza "1" pentru a vizualiza intrarile existente.
 - aici nu mai avem un mockup entry, astfel cand nu este introdusa nici o intrare, va aparea mesajul: "(No entries found in Wasm Memory Stack)"
@@ -64,32 +63,18 @@ Datorita capacitatilor limitate pe care ni le pune la dispozitie WebAssembly, in
 **[ 2 ] POST entry** - utilizatorul tasteaza "2" pentru a adauga o intrare noua.
 - utilizarea acestei optiuni, se va face printr-un pop-up de input, introducand: tip ("earned" / "used"), data (YYYY-MM-DD), categorie ("liber" / "exercitiu" / "recompensa"), detalii (optional).
 - datorita unui [bug](https://github.com/nplusunu/amr/issues/10) care se manifesta ca un infinite loop si pop-up-ul de input nu se mai inchide, pentru a iesi din pop-up trebuie selectata optiunea de "cancel".
+
+Exemplu de input: *earned* [press OK] *2026-05-01* [press OK] *liber* [press OK] *Ziua Muncii* [press OK] **[press Cancel]**
+
 - informatia adaugata astfel **NU** se retine, fiind disponibila pana la urmatorul Page Refresh.
 
 **[ 3 ] GET balance** - utilizatorul tasteaza "3" pentru a obtine sumarul zilelor libere.
 
 **NOTA:** Cum WebAssembly **NU** comunica prin HTTP, mesajele de HTTP (eg. "200 OK") sunt defapt cosmetizari, care sa simuleze existenta unui server HTTP, asa cum ne-am astepta din partea unui REST API.
-Deasemenea, datoria diferentelor de stocarea a informatiei dintre WebUI (localStorage) si WebAssembly (Wasm Memory), a fost adaugata o functie de sincronizare intre cele 2 interfete, cu mentiunea ca aceasta sincronizare functioneaza **DOAR** in directia WEBUI -> WASM, nu si invers. Altfel spus, ce se introduce prin WASM **NU** se va putea vedea in aplicatia web.
+Deasemenea, datorita diferentelor de stocarea a informatiei dintre WebUI (localStorage) si WebAssembly (Wasm Memory), a fost adaugata o functie de sincronizare intre cele 2 interfete, cu mentiunea ca aceasta sincronizare functioneaza **DOAR** in directia WEBUI -> WASM, nu si invers. Altfel spus, ce se introduce prin WASM **NU** se va putea vedea in aplicatia web.
 Pentru ca informatiile introduse prin WebUI (campurile formularului) sa fie vizibile si in Wasm Console, va fi necesar un Page Refresh.
 
-## Interne
-1. Design si Interfata
-- TUI (Terminal User Interface): varianta instalabila local contine un **Meniu**, interactiunea cu aplicatia realizandu-se selectand o optiune numerica 1-5.
-- Web UI: aceasta este varianta vizibila folosind oricare din web-browserele moderne (compatibile cu JS). Elementul de noutate aici este **Wasm Demo Console** - o consola intr-o interfata web (mai multe detalii mai jos).
-
-2. Tehnologii folosite
-
-AMR in varianta executabila local, este realizata in limbaj **C++**, fiind o scriere si adaptare a variantei javascript, facand uz de structuri de date si operatii cu fisiere (functia de export CSV).
-
-Am folosit acest prilej pentru a pregati dezvoltarea acestui program sub forma unui REST API. In acest context, cu ajutorul **WebAssembly**, am creat Wasm Demo Console, un mediu de lansare a comenzilor ce simuleaza aplicatia AMR sub forma de REST API.
-
-**Nota:** WebAssembly (Wasm) este un runtime environment, o "masina virtuala" low-level ce permite executabilelor (precum /bin/amr) sa poata rula in interiorul unui website.
-Fiind o masina virtuala, aceasta vine cu multe limitari, ceea ce a impus rescrierea executabilului nostru, pentru a putea rula in interiorul consolei disponibile in interfata web.
-Deasemenea, vorbim doar de un Demo de REST API, deoarece unul autentic presupune comunicarea HTTP, iar WebAssembly, ca si sandbox, nu poate acomoda asemenea comunicare. Pentru realizarea acestui Demo, a fost scris un engine.cpp, unde API "routes" au fost definite ca functii standard, utilizand structuri de date si liste.
-
-3. Arhitectura
-
-Interfata **Web** (HTML, CSS) primeste prin intermediul JS input:
+Principiu de functionare: interfata **Web** (HTML, CSS) primeste prin intermediul JS input:
 - din **Formular** - backendul aici este in app.js (pana aici e un Single-Page WebApp clasic)
 - din **Wasm Console** - "engine.js" (fisier generat prin compilarea cu **emcc**) capteaza inputul (Emscripten Bridge stdin/stdout) si apeleaza functiile C compilate direct.
 
@@ -97,5 +82,5 @@ Interfata **Web** (HTML, CSS) primeste prin intermediul JS input:
 AMR este un exercitiu demonstrativ de dezvoltare. Functionalitatea de baza - cea de gestionare a zilelor libere - este privita ca un "use-case". Scopul din spatele acestei aplicatii este de a testa diferite tehnologii si combinatii ale acestora.
 
 - (Original) - WebApp care sa puna in valoare diferitele Interfete si moduri de functionare (client-side/server-side): HTML, CSS, JS, PHP
-- (Curent) - Aplicatie standalone care sa puna in valoare utilizarea structurilor de date: C++
+- (Curent) - Aplicatie standalone care sa puna in valoare utilizarea structurilor de date: C/C++
 - (Viitor) - REST API real (nu demo).
