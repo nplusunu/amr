@@ -40,20 +40,37 @@ Instalarea aplicatiei consta in copierea locala a fisierului sursa **/bin/amr.cp
 ### AMR (Standalone)
 Interactiunea cu ./amr se realizeaza prin selectarea unei optiuni numerice, din cadrul unui **Meniu**:
 
-**1. Vizualizare intrari** - emuleaza un **GET /api/entries**, listand intrarile disponibile (**Istoric**), fiind populate implicit cu un mockup entry. Acest mockup serveste drept model de intrare si poarta si o notificare ca "Sistemul a pornit cu succes."
+**1. Vizualizare intrari** - simuleaza un **GET /api/entries**, listand intrarile disponibile (**Istoric**), fiind populate implicit cu un mockup entry. Acest mockup serveste drept model de intrare si poarta si o notificare ca "Sistemul a pornit cu succes."
 
-**2. Adaugare intrare noua** - emuleaza un **POST /api/entries**, adaugand o noua linie in Istoric, astfel:
+**2. Adaugare intrare noua** - simuleaza un **POST /api/entries**, adaugand o noua linie in Istoric, astfel:
 - Utilizatorul alege Tipul: recuperare **obtinuta** (tastand "o") sau **utilizata** (tastand "u")
 - Se introduce Data recuperarii in format AAAA-LL-ZZ
 - Se alege Categoria: "liber" (implicit numarul de zile completat va fi 2), "exercitiu" (implicit 1 zi) sau "recompensa" (implicit 1 zi)
 - Se completeaza optional campul de detalii
 
-**3. Sumar** - emuleaza un **GET /api/balance**, indicand numarul de zile libere disponibile.
+**3. Sumar** - simuleaza un **GET /api/balance**, indicand numarul de zile libere disponibile.
 
 **4. Export catre fisier CSV** - aceasta optiune va crea un fisier **libere.csv**, servind ca modalitate de salvare a intrarilor, care altfel s-ar pierde la iesirea din aplicatie.
 
 **5. Iesire**
 
+### AMR (Wasm Console)
+Interactiunea cu AMR sub forma (simulata) de REST API, are loc in cadrul **Wasm Engine Demo Console (C++ Layer)**, in cadrul aplicatiei web [amr.nplusunu.ro](https://amr.nplusunu.ro).
+Datorita capacitatilor limitate pe care ni le pune la dispozitie WebAssembly, interactiunea este una de baza, avand la dispozitie doar 3 optiuni, anume:
+
+**[ 1 ] GET entries** - utilizatorul tasteaza "1" pentru a vizualiza intrarile existente.
+- aici nu mai avem un mockup entry, astfel cand nu este introdusa nici o intrare, va aparea mesajul: "(No entries found in Wasm Memory Stack)"
+
+**[ 2 ] POST entry** - utilizatorul tasteaza "2" pentru a adauga o intrare noua.
+- utilizarea acestei optiuni, se va face printr-un pop-up de input, introducand: tip ("earned" / "used"), data (YYYY-MM-DD), categorie ("liber" / "exercitiu" / "recompensa"), detalii (optional).
+- datorita unui [bug]() care se manifesta ca un infinite loop si pop-up-ul de input nu se mai inchide, pentru a iesi din pop-up trebuie selectata optiunea de "cancel".
+- informatia adaugata astfel **NU** se retine, fiind disponibila pana la urmatorul Page Refresh.
+
+**[ 3 ] GET balance** - utilizatorul tasteaza "3" pentru a obtine sumarul zilelor libere.
+
+**NOTA:** Cum WebAssembly **NU** comunica prin HTTP, mesajele de HTTP (eg. "200 OK") sunt defapt cosmetizari, care sa simuleze existenta unui server HTTP, asa cum ne-am astepta din partea unui REST API.
+Deasemenea, datoria diferentelor de stocarea a informatiei dintre WebUI (localStorage) si WebAssembly (Wasm Memory), a fost adaugata o functie de sincronizare intre cele 2 interfete, cu mentiunea ca aceasta sincronizare functioneaza **DOAR** in directia WEBUI -> WASM, nu si invers. Altfel spus, ce se introduce prin WASM **NU** se va putea vedea in aplicatia web.
+Pentru ca informatiile introduse prin WebUI (campurile formularului) sa fie vizibile si in Wasm Console, va fi necesar un Page Refresh.
 
 ## Interne
 1. Design si Interfata
